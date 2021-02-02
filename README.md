@@ -5,17 +5,17 @@ This package contains methods to encode/decode strings using async generators.
 
 * High-level methods:
   - [encode](#encode-method) encode strings to UTF-8 binary blocks
-  - [decode](#decode-method) decodes binary blocks and returns decoded strings
-  - [lines](#lines-method) decodes binary stream and returns individual lines
-* Main methods encoding / decoding messages and providing detailed information
-  about exact position of blocks in the stream:
-  - [encodeBlocks](#encodeBlocks-method) encode strings to UTF-8 binary blocks
-    and returns byte position and byte length of the encoded chunk 
+  - [decode](#decode-method) decodes binary blocks and returns string chunks
+  - [lines](#lines-method) decodes binary stream and returns individual lines;
+    returned lines have the trailing `"\n"` symbol.
+* Main methods for encoding / decoding messages. These methods provide 
+  detailed information about exact positions of returned blocks in the stream:
+  - [encodeBlocks](#encodeBlocks-method) encodes strings to UTF-8 binary blocks
+    and returns byte position and length of the encoded chunks
   - [decodeBlocks](#decodeBlocks-method) decodes binary blocks and returns 
-    decoded strings with byte-level position of these strings in the
-    original stream
-  - [decodeLines](#decodeLines-method) decodes individual lines from the
-    original stream with the same position information 
+    decoded strings with their byte-level positions in the original stream
+  - [decodeLines](#decodeLines-method) decodes individual lines and returns 
+    their position in the stream; returned lines have the trailing `"\n"` symbol
 * Low-level functions accepting one character / one byte and performing encoding / decoding
   at the byte level:
   - [newEncoder](#newEncoder-method) encodes individual characters
@@ -132,7 +132,8 @@ for await (let str of f(blocks)) {
 `lines` method
 --------------
 
-Decodes binary stream and returns individual lines
+Decodes binary stream and returns individual lines.
+The returned lines contain the trailing `"\n"` symbol (except, eventually, the last line).
 
 Paramters:
 - `onBlock` - an optional method recieving full information 
@@ -345,6 +346,7 @@ for await (let info of f(blocks)) {
 
 Decodes and returns individual lines from the byte stream. The returned lines
 are associated with their position information.
+All lines contain the trailing `"\n"` symbol except, eventually, the last one.
 
 The returned messages have the following structure:
 - `data` - the line string; it contains the `\\n` symbol at the end.
@@ -460,7 +462,8 @@ Returned method accepts the following parameters:
 - `code` - code of the character to encode
 - `buf` - buffer where character bytes should be written
 - `idx` - start position in the buffer where encoded bytes should be written
-It returns the number of encoded bytes.
+
+This method returns the number of encoded bytes.
 
 Example: 
 ```javascript
@@ -484,8 +487,9 @@ This method accepts one byte and returns a string with the decoded characters.
 
 Returned method accepts the following parameters:
 - `byte` - one byte from the stream
-It returns a string with the decoded characters. If there is no 
-characters ready to output then this method returns an empty string.
+
+This method returns a string with the decoded characters. If there is no 
+characters ready to output then it returns an empty string.
 
 Example: 
 ```javascript
