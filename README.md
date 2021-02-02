@@ -388,7 +388,6 @@ for await (let info of f(blocks)) {
   console.log('*', info);
 }
 // Output:
-// Output:
 // -----------
 // * {
 //   charIdx: 0,
@@ -449,7 +448,7 @@ for await (let info of f(blocks)) {
 //   lastPos: 3,
 //   data: "чаю"
 // }
-
+```
 
 `newEncoder` method
 -------------------
