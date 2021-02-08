@@ -2,7 +2,6 @@
   "name": "@agen/encoding",
   "version": "0.1.0",
   "description": "Encoding/decoding streams with async generators",
-  "type": "module",
   "keywords": [
     "async",
     "generators",
@@ -18,6 +17,7 @@
   },
   "main": "dist/agen-encoding.js",
   "unpkg": "dist/agen-encoding.min.js",
+  "jsdelivr": "dist/agen-encoding.min.js",
   "module": "dist/agen-encoding-esm.js",
   "repository": {
     "type": "git",
@@ -29,13 +29,14 @@
   ],
   "scripts": {
     "pretest": "rollup -c",
-    "test": "node ./test/index.js && eslint src",
+    "test": "node -r esm ./test/index.js && eslint src",
     "prepublishOnly": "rm -rf dist && yarn test",
     "postpublish": "zip -j dist/agen-encoding.zip -- LICENSE README.md dist/*.js"
   },
   "sideEffects": false,
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^11.1.0",
+    "esm": "^3",
     "eslint": "7",
     "rollup": "2",
     "rollup-plugin-terser": "7",
