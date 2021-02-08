@@ -1,6 +1,6 @@
 {
   "name": "@agen/encoding",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Encoding/decoding streams with async generators",
   "keywords": [
     "async",
@@ -36,8 +36,8 @@
   "sideEffects": false,
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^11.1.0",
-    "esm": "^3",
     "eslint": "7",
+    "esm": "^3",
     "rollup": "2",
     "rollup-plugin-terser": "7",
     "tape": "4",
