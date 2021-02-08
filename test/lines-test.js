@@ -3,10 +3,10 @@ import * as agen from '../dist/agen-encoding-esm.js';
 import { phrases } from './data.js';
 
 for (let [blocks, lines] of phrases) {
-  await testEncodingDecondingWithLines(blocks, lines);
+  testEncodingDecondingWithLines(blocks, lines);
 }
 
-async function testEncodingDecondingWithLines(blocks, lines) {
+function testEncodingDecondingWithLines(blocks, lines) {
   tape(`encode/decode lines`, async function(t) {
     const f = compose(
       agen.encode(),
