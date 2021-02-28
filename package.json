@@ -1,6 +1,6 @@
 {
   "name": "@agen/encoding",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Encoding/decoding streams with async generators",
   "keywords": [
     "async",
