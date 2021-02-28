@@ -1,12 +1,13 @@
-import decodeLines from './decodeLines.js';
-
-export default function lines(splitter, onBlock) {
-  if (typeof splitter === 'function') { onBlock = splitter; splitter = undefined; }
-  return async function* (it) {
-    const decoder = decodeLines(splitter);
-    for await (let block of decoder(it)) {
-      onBlock && await onBlock(block);
-      yield block.data;
+export default function lines(split = (str => str.split(/\r?\n/))) {
+  return async function*(it) {
+    let buffer;
+    for await (let chunk of it) {
+      buffer = buffer || '';
+      buffer += chunk;
+      const lines = split(buffer);
+      buffer = lines.pop();
+      yield* lines;
     }
+    if (buffer !== undefined) yield buffer;
   }
 }
