@@ -15,7 +15,6 @@
   "author": {
     "name": "Mikhail Kotelnikov"
   },
-  "type": "module",
   "main": "dist/agen-encoding.js",
   "unpkg": "dist/agen-encoding.min.js",
   "jsdelivr": "dist/agen-encoding.min.js",
