@@ -1,13 +1,14 @@
 import {nodeResolve} from "@rollup/plugin-node-resolve";
 import {terser} from "rollup-plugin-terser";
 import * as meta from "./package.json";
+import generatePackageJson from 'rollup-plugin-generate-package-json'
 
 const distName = meta.name.replace('@', '').replace('/', '-');
 const config = {
   input: "src/index.js",
   external: Object.keys(meta.dependencies || {}).filter(key => /^@agen/.test(key)),
   output: {
-    file: `dist/${distName}.js`,
+    file: `dist/cjs/${distName}.js`,
     name: "agen",
     format: "umd",
     indent: false,
@@ -16,7 +17,13 @@ const config = {
     globals: Object.assign({}, ...Object.keys(meta.dependencies || {}).filter(key => /^@agen/.test(key)).map(key => ({[key]: "agen"})))
   },
   plugins: [
-    nodeResolve()
+    nodeResolve(),
+    generatePackageJson({
+      outputFolder: 'dist/cjs',
+      baseContents: {
+        "type": "commonjs"
+      }
+    })
   ]
 };
 
@@ -26,7 +33,7 @@ export default [
     ...config,
     output: {
       ...config.output,
-      file: `dist/${distName}.min.js`
+      file: `dist/cjs/${distName}.min.js`
     },
     plugins: [
       ...config.plugins,
@@ -41,7 +48,7 @@ export default [
     ...config,
     output: {
       ...config.output,
-      file: `dist/${distName}-esm.js`,
+      file: `dist/esm/${distName}-esm.js`,
       format : "es"
     },
   },
@@ -49,7 +56,7 @@ export default [
     ...config,
     output: {
       ...config.output,
-      file: `dist/${distName}-esm.min.js`,
+      file: `dist/esm/${distName}-esm.min.js`,
       format: "es"
     },
     plugins: [

@@ -1,5 +1,5 @@
 {
-  "name": "@agen/encoding",
+  "name": "@agen/encoding", 
   "version": "0.1.5",
   "description": "Encoding/decoding streams with async generators",
   "keywords": [
@@ -15,37 +15,39 @@
   "author": {
     "name": "Mikhail Kotelnikov"
   },
-  "main": "dist/agen-encoding.js",
-  "unpkg": "dist/agen-encoding.min.js",
-  "jsdelivr": "dist/agen-encoding.min.js",
-  "module": "dist/agen-encoding-esm.js",
+  "type": "module",
+  "files": [
+    "dist/**/package.json",
+    "dist/**/*.js",
+    "src/**/*.js"
+  ],
+  "main": "dist/cjs/agen-encoding.js",
+  "module": "dist/esm/agen-encoding-esm.js",
+  "jsdelivr": "dist/cjs/agen-encoding.min.js",
+  "unpkg": "dist/cjs/agen-encoding.min.js",
   "exports": {
-    "package.json": "./package.json",
-    "import": "./src/index.js",
-    "require": "./dist/agen-encoding.js"
+    "umd": "./dist/cjs/agen-encoding.min.js",
+    "require": "./dist/cjs/agen-encoding.js",
+    "default": "./src/index.js"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/agenjs/agen-encoding.git"
   },
-  "files": [
-    "dist/**/*.js",
-    "src/**/*.js"
-  ],
   "scripts": {
     "pretest": "rollup -c",
-    "test": "node -r esm ./test/index.js && eslint src",
+    "test": "node ./test/index.js && eslint src",
     "prepublishOnly": "rm -rf dist && yarn test",
     "postpublish": "zip -j dist/agen-encoding.zip -- LICENSE README.md dist/*.js"
   },
   "sideEffects": false,
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^11.1.0",
+    "@rollup/plugin-node-resolve": "13.0.0",
     "eslint": "7",
-    "esm": "^3",
     "rollup": "2",
+    "rollup-plugin-generate-package-json": "3",
     "rollup-plugin-terser": "7",
-    "tape": "5",
+    "tape": "4",
     "tape-await": "0.1"
   },
   "publishConfig": {
